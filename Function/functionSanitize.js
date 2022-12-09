@@ -8,6 +8,23 @@ function fields (data, size) {
        ok = false
    }
 }
+function creatData (SQL, body) {
+   let array = [SQL];
+   //const JSONBODY = req.body;
+
+   let JSON_ARRAY =  JSON.stringify(body);
+   let clean = JSON_ARRAY.replace('{', '');
+   clean = clean.replace('}', '');
+   clean = (clean.split(':'));
+   for (let index = 0; index < clean.length; index++) {
+       if(index%2){
+           array.push(clean[index]);
+       }
+   }
+   return array;
+}
+
+
 function verifyID (sql, id) {
    // Construct requet
    // SQL = SELECT <id table> FROM <table> WHERE `idGroupe` =
@@ -21,4 +38,4 @@ function verifyID (sql, id) {
    }*/
 
 }
-module.exports = {fields, verifyID}
+module.exports = {fields, verifyID, creatData}

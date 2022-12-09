@@ -1,12 +1,12 @@
 const ModelsGroupes = require('../Models/ModelsGroupes.js');
 let modelsGroupe = require('../Models/ModelsGroupes.js');
-var {fields, verifyID} = require('../Function/functionSanitize.js');
+var {fields, verifyID, creatData} = require('../Function/functionSanitize.js');
 let models = new ModelsGroupes();
-
+const debug = true;
     
 class Groups {
     async listAllGroup (req, res) {
-            // Construction du data
+            // Construction du data array
             let arrayReq = ["SELECT `groupe` FROM `Groupes`"];
             res.send(await models.getGeneral(arrayReq));
             res.status(200);
@@ -22,7 +22,12 @@ class Groups {
         // Controle champs vide et taille
         let ok = fields (data, 60);
         if (!ok) {
-            models.addG(req);
+            const SQL = "INSERT INTO `Groupes`(`groupe`) VALUES (?)";
+            let array = creatData(SQL, req.body);
+                if(debug){
+                    console.log(array)
+                }
+            models.postCUD(array);
             res.status(200);
             res.send('Ajouter un groupe');
         } else {

@@ -15,7 +15,13 @@ class ModelsGroupes {
             })
         })
     }
+    postCUD(data) {
+        const SQL = data[0];
+        data.shift()
 
+
+        db.query('INSERT INTO `Groupes`(`groupe`) VALUES (?)', data);
+    }
 
 
     listG () {
