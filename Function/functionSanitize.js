@@ -9,18 +9,22 @@ function fields (data, size) {
    }
 }
 function creatData (SQL, body) {
-   let array = [SQL];
-   //const JSONBODY = req.body;
-
-   let JSON_ARRAY =  JSON.stringify(body);
-   let clean = JSON_ARRAY.replace('{', '');
+   let array = [];
+   let clean =  JSON.stringify(body);
+   clean = clean.replace('{', '');
    clean = clean.replace('}', '');
-   clean = (clean.split(':'));
    for (let index = 0; index < clean.length; index++) {
-       if(index%2){
-           array.push(clean[index]);
-       }
+      clean = clean.replace('"', '');
+      clean = clean.replace(':', ',')
    }
+   clean = (clean.split(','));
+
+   for (let index = 0; index < clean.length; index++) {
+      if(index%2 == 1) {
+         array.push(clean[index]);
+      }
+   }
+   array.unshift(SQL);
    return array;
 }
 

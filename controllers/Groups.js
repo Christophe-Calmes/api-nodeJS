@@ -15,8 +15,6 @@ class Groups {
         res.status(200);
         res.send('User groupes');
     }
-
-    
     addGroups (req, res) {
         let data = req.body.groupe;
         // Controle champs vide et taille
@@ -37,14 +35,19 @@ class Groups {
     }
     updateGroups (req, res) {
         console.log(req.body.groupe);
-        let data = req.body.groupe;
-        let id = req.body.id;
+        const data = req.body.groupe;
+        const id = req.body.id;
         let ok = fields(data, 60);
-        let SQL = "SELECT `idGroupe` FROM `Groupes` WHERE `idGroupe` =";
+        
 
-        let idOK = verifyID(SQL, id);
-        if(id.isInteger() && !ok){
-            models.updatedG(req);
+
+        if(!ok){
+            const SQL = "INSERT INTO `Groupes`(`groupe`) VALUES (?)";
+            let array = creatData(SQL, req.body);
+            if(debug){
+                console.log(array);
+            }
+            //models.updatedG(req);
             res.status(200);
             res.send('Modifier un groupe');
         } else {
