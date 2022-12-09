@@ -1,12 +1,17 @@
 const ModelsGroupes = require('../Models/ModelsGroupes.js');
 let modelsGroupe = require('../Models/ModelsGroupes.js');
 var {fields, verifyID} = require('../Function/functionSanitize.js');
+const { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } = require('react-dom/cjs/react-dom.production.min.js');
 let models = new ModelsGroupes();
+const debug = true;
 
     
 class Groups {
     async listAllGroup (req, res) {
-            res.send(await models.listG());
+            console.log(req);
+            // Tableau pour la construction du moidels
+            let array = ["SELECT `groupe` FROM `Groupes`"];
+            res.send(await models.controlerGetGeneral(array));
             res.status(200);
     }
     async listUserAllGroups (req, res){
@@ -20,7 +25,10 @@ class Groups {
         // Controle champs vide et taille
         let ok = fields (data, 60);
         if (!ok) {
-            models.addG(req);
+            // Construction du tableau
+            let array = ["INSERT INTO `Groupes`(`groupe`) VALUES (?)"];
+            array.push(req.body.groupe)
+            models.addG(array);
             res.status(200);
             res.send('Ajouter un groupe');
         } else {
@@ -33,7 +41,7 @@ class Groups {
         let data = req.body.groupe;
         let id = req.body.id;
         let ok = fields(data, 60);
-        let SQL = "SELECT `idGroupe` FROM `Groupes` WHERE `idGroupe` =";
+        //let SQL = "SELECT `idGroupe` FROM `Groupes` WHERE `idGroupe` =";
 
         let idOK = verifyID(SQL, id);
         if(id.isInteger() && !ok){
