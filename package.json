@@ -1,0 +1,26 @@
+{
+  "name": "api-nodejs",
+  "version": "1.0.0",
+  "description": "api la plateforme",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Christophe-Calmes/api-nodeJS.git"
+  },
+  "author": "Christophe Calmes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Christophe-Calmes/api-nodeJS/issues"
+  },
+  "homepage": "https://github.com/Christophe-Calmes/api-nodeJS#readme",
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "express": "^4.18.2",
+    "helmet": "^6.0.1",
+    "mysql2": "^2.3.3",
+    "nodemon": "^2.0.20"
+  }
+}
