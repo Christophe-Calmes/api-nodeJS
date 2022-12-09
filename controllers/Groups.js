@@ -6,7 +6,9 @@ let models = new ModelsGroupes();
     
 class Groups {
     async listAllGroup (req, res) {
-            res.send(await models.listG());
+            // Construction du data
+            let arrayReq = ["SELECT `groupe` FROM `Groupes`"];
+            res.send(await models.getGeneral(arrayReq));
             res.status(200);
     }
     async listUserAllGroups (req, res){
