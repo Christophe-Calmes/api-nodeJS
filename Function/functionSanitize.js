@@ -1,12 +1,13 @@
 const db = require('../connexion.js');
 function fields (data, size) {
    let ok = true
-   if(data.length === 0) {
+   if(data.length == 0) {
        ok = false
    }
    if(data.length >= size){
        ok = false
    }
+   return ok;
 }
 function creatData (SQL, body) {
    let array = [];
@@ -30,17 +31,32 @@ function creatData (SQL, body) {
 }
 
 
-function verifyID (sql, id) {
+async function verifyID (sql, id) {
+   const debug = true;
+
    // Construct requet
    // SQL = SELECT <id table> FROM <table> WHERE `idGroupe` =
-   const SQL = sql + id;
-   const element = db.query(SQL);
-   console.log(element);
-   /*if(element != null) {
-      return true;
-   } else {
-      return false;
-   }*/
-
+   const array = [id]
+   return new Promise ((resolve, reject) => {
+      db.query(sql, array, (error, result) => {
+         if(error){
+            // En cas d'erreur on retour false pour stopper le traitement
+            //console.log(resolv(error));
+            return resolve(error);
+         } else {
+            if(debug){
+               console.log(result[0].ok);
+            }
+            if(result[0].ok == 1) {
+               console.log('Coucou');
+               return true;
+            } else {
+               console.log('Pas coucou');
+               return false;
+            }
+           
+         }
+      })
+   })
 }
 module.exports = {fields, verifyID, creatData}

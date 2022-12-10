@@ -1,5 +1,5 @@
 const db = require('../connexion.js');
-//let connect = require('../connexion.js');
+
 let debug = true;
 class ModelsGroupes {
     getGeneral(data) {

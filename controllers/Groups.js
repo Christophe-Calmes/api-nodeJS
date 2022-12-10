@@ -34,20 +34,20 @@ class Groups {
         }
     }
     updateGroups (req, res) {
-        console.log(req.body.groupe);
+        if(debug){
+            console.log(req.body.groupe);
+        }
+        // if idGroupe is real
+        const id = req.body.idGroupe;
         const data = req.body.groupe;
-        const id = req.body.id;
-        let ok = fields(data, 60);
-        
-
-
-        if(!ok){
+        console.log(id);
+        const controlSQL = "SELECT COUNT(`idGroupe`) AS `ok` FROM `Groupes` WHERE `idGroupe`= ?";
+        if(fields(data, 60) && verifyID(controlSQL, id)){
             const SQL = "UPDATE `Groupes` SET `groupe`= ?, `updatedAt`= NOW() WHERE `idGroupe` = ?";
             let array = creatData(SQL, req.body);
             if(debug){
                 console.log(array);
             }
-         
             models.postCUD(array);
             res.status(200);
             res.send('Modifier un groupe');
