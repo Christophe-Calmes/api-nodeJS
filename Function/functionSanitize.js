@@ -25,6 +25,7 @@ function creatData (SQL, body) {
       }
    }
    array.unshift(SQL);
+   console.log(array);
    return array;
 }
 

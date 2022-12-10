@@ -42,12 +42,13 @@ class Groups {
 
 
         if(!ok){
-            const SQL = "INSERT INTO `Groupes`(`groupe`) VALUES (?)";
+            const SQL = "UPDATE `Groupes` SET `groupe`= ?, `updatedAt`= NOW() WHERE `idGroupe` = ?";
             let array = creatData(SQL, req.body);
             if(debug){
                 console.log(array);
             }
-            //models.updatedG(req);
+         
+            models.postCUD(array);
             res.status(200);
             res.send('Modifier un groupe');
         } else {
@@ -62,4 +63,4 @@ class Groups {
         res.send('User '+IDGROUPE+' deleted');
     }
 }
-module.exports = Groups;
+module.exports = Groups; 
